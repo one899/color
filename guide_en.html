@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>OS16 Flashing Guide | Color Archive</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0c15;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: #eef2ff;
+            line-height: 1.5;
+            padding: 2rem 1rem;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(79, 70, 229, 0.2), transparent 60%),
+                        radial-gradient(circle at 85% 70%, rgba(6, 182, 212, 0.2), transparent 60%);
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            color: #eef2ff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .card {
+            background: rgba(18, 22, 35, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-left: 3px solid #8b5cf6;
+            padding-left: 0.8rem;
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #c4b5fd;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .card ul, .card ol {
+            margin-left: 1.5rem;
+            color: #cbd5e6;
+        }
+
+        .card li {
+            margin: 0.5rem 0;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(139, 92, 246, 0.3);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+        }
+
+        .warning {
+            background: rgba(245, 158, 11, 0.15);
+            border-left: 3px solid #f59e0b;
+            padding: 0.8rem 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .success {
+            background: rgba(34, 197, 94, 0.1);
+            border-left: 3px solid #22c55e;
+            padding: 0.8rem 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .qq-card {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.2), rgba(139, 92, 246, 0.2));
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .copy-qq-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            color: #eef2ff;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-qq-btn:hover {
+            background: rgba(139, 92, 246, 0.4);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem 0;
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="index_en.html" class="back-btn">← Back to Home</a>
+
+    <div class="card" style="text-align: center;">
+        <h1 style="font-size: 1.8rem; margin-bottom: 0.3rem;">🍽️ OS16 Flashing Guide</h1>
+        <p style="color: #9ca3af;">Three flashing methods, choose as needed</p>
+    </div>
+
+    <!-- Method 1 -->
+    <div class="card">
+        <h2>🔧 Method 1: Flash via Toolbox</h2>
+        <p><span class="badge">Requirements</span> A computer (try to disable antivirus), a phone, system package, USB cable</p>
+        <h3>📋 Steps:</h3>
+        <ol>
+            <li>After downloading the system package, <strong>extract</strong> it.</li>
+            <li>Open <strong>可怜太可怜's Toolbox</strong> on your computer (password available in his group), <strong>disable antivirus software</strong>.</li>
+            <li>In the toolbox, select <strong>option 1 or 3</strong>, then choose whether to watch the tutorial.</li>
+            <li>Select the extracted folder (the toolbox will auto-extract), <strong>connect your phone via USB in advance</strong>.</li>
+            <li>Choose whether to <strong>wipe data</strong> based on your situation.</li>
+        </ol>
+    </div>
+
+    <!-- Method 2 -->
+    <div class="card">
+        <h2>📲 Method 2: TWRP/OrangeFox / ADB Sideload</h2>
+        <p><span class="badge">Requirements</span> A computer, a phone, TWRP/OrangeFox img, USB cable, system package, Toolbox (e.g., 搞机助手)</p>
+        <h3>📋 Steps:</h3>
+        <ol>
+            <li>Connect your phone via USB, open <strong>搞机助手</strong>.</li>
+            <li>Once detected, reboot your phone from system to <strong>bootloader mode</strong>.</li>
+            <li>In the toolbox, switch to the bootloader tab and select <strong>temporary flash</strong> recovery.</li>
+            <li>After entering recovery, there are two ways to flash:</li>
+        </ol>
+        <h3>🔹 Option A (ADB Sideload):</h3>
+        <ol start="5">
+            <li>On your computer, click the recovery mode tab and enter <strong>sideload mode</strong>.</li>
+            <li>On your phone, go to <strong>Advanced</strong> → tap <strong>ADB Sideload</strong>, swipe the slider, and the system will flash automatically.</li>
+        </ol>
+        <h3>🔸 Option B (Flash from phone storage):</h3>
+        <ol start="5">
+            <li>Place the system package in your phone storage.</li>
+            <li>Go to the <strong>Install</strong> tab, select the system package, and swipe the slider.</li>
+            <li>Reboot your system.</li>
+        </ol>
+        <div class="warning">
+            ⚠️ <strong>Note</strong>: Some devices may encounter errors. If so, switch to <strong>Method 1</strong>.<br>
+            ⚠️ It is not recommended to use Method 2 on ColorOS 15.0.0.400 (may cause minor bugs).
+        </div>
+    </div>
+
+    <!-- Method 3 -->
+    <div class="card">
+        <h2>🔄 Method 3: Upgrade from OxygenOS 15 to 16</h2>
+        <p><span class="badge">Requirements</span> System package, phone</p>
+        <p><strong>Prerequisite:</strong> Your phone must be running <strong>OxygenOS 15.0.0.703 or higher</strong>.</p>
+        <h3>📋 Steps:</h3>
+        <ol>
+            <li>Go to <strong>Settings</strong> → <strong>System Update</strong>.</li>
+            <li>Tap the <strong>three dots</strong> in the top-right corner and select <strong>Local Install</strong>.</li>
+            <li>Select the system package and tap <strong>Install Now</strong>.</li>
+        </ol>
+        <div class="success">
+            💡 <strong>Tip</strong>: If you don't see the "Local Install" option, enable <strong>Developer Options</strong> and it will appear.
+        </div>
+    </div>
+
+    <!-- Important Notes -->
+    <div class="card">
+        <h2>⚠️ Important Notes</h2>
+        <ul>
+            <li>All system packages provided by me are <strong>free</strong>. If you see any paid content, it may not be from me — please report it.</li>
+            <li>To try new versions, report bugs, or discuss localization, join our group. All resources have been uploaded.</li>
+        </ul>
+    </div>
+
+    <!-- QQ Group Card -->
+    <div class="qq-card">
+        <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.3rem;">💬 Join Our Group</div>
+        <div style="font-size: 0.8rem; color: #9ca3af; margin-bottom: 0.8rem;">Feedback · Resources · Discussions</div>
+        <div style="font-size: 1.8rem; font-weight: 700; color: #c084fc; letter-spacing: 2px; margin: 0.5rem 0;">478538539</div>
+        <button class="copy-qq-btn" onclick="copyQQ()">📋 Copy Group ID</button>
+        <div style="font-size: 0.7rem; margin-top: 0.6rem; color: #6c7293;">Open QQ → Search → Enter ID → Join</div>
+    </div>
+
+    <footer>
+        Color Archive · OS16 Flashing Guide | Flashing has risks, proceed with caution
+    </footer>
+</div>
+
+<script>
+function copyQQ() {
+    const qq = "478538539";
+    navigator.clipboard.writeText(qq).then(() => {
+        alert("QQ group ID copied: " + qq);
+    }).catch(() => {
+        prompt("Manually copy group ID:", qq);
+    });
+}
+</script>
+</body>
+</html>
