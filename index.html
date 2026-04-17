@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Color Archive | Port · Official Mod Fusion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0c15;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: #eef2ff;
+            line-height: 1.5;
+            padding: 2rem 1rem;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(79, 70, 229, 0.2), transparent 60%),
+                        radial-gradient(circle at 85% 70%, rgba(6, 182, 212, 0.2), transparent 60%);
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: rgba(18, 22, 35, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1.8rem;
+            margin-bottom: 2rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5);
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 1rem 0 2rem;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #c084fc, #60a5fa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            color: #9ca3af;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: inline-block;
+            padding-top: 0.8rem;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            margin: 2rem 0 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 0.75rem 1.8rem;
+            border-radius: 60px;
+            font-weight: 500;
+            color: #eef2ff;
+            text-decoration: none;
+            transition: all 0.2s;
+            backdrop-filter: blur(4px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(105deg, #4f46e5, #7c3aed);
+            border: none;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            background: linear-gradient(105deg, #6366f1, #8b5cf6);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.5);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(139, 92, 246, 0.6);
+        }
+
+        .btn-success {
+            background: linear-gradient(105deg, #059669, #10b981);
+            border: none;
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(105deg, #10b981, #34d399);
+            transform: scale(1.02);
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-left: 4px solid #8b5cf6;
+            padding-left: 1rem;
+        }
+
+        .qa-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+            padding-bottom: 1.2rem;
+        }
+
+        .qa-question {
+            font-weight: 600;
+            color: #c4b5fd;
+            margin-bottom: 0.4rem;
+            font-size: 1.05rem;
+        }
+
+        .qa-answer {
+            color: #d1d5db;
+            padding-left: 0.5rem;
+            border-left: 2px solid rgba(139, 92, 246, 0.4);
+        }
+
+        .price-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 1rem 0 0.5rem;
+        }
+
+        .price-card {
+            flex: 1;
+            min-width: 200px;
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        .price-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #f0abfc;
+            margin: 0.5rem 0;
+        }
+
+        .price-desc {
+            font-size: 0.85rem;
+            color: #9ca3af;
+            margin-top: 0.5rem;
+        }
+
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+        }
+
+        .service-name {
+            color: #cbd5e6;
+        }
+
+        .service-price {
+            color: #f0abfc;
+            font-weight: 600;
+        }
+
+        .download-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .download-card {
+            flex: 1;
+            min-width: 180px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 1.2rem;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .device-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .device-tag {
+            background: rgba(139, 92, 246, 0.2);
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            border-radius: 60px;
+            padding: 0.5rem 1.2rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .device-tag.support {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: rgba(34, 197, 94, 0.5);
+            color: #4ade80;
+        }
+
+        .qr-container {
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .qr-img {
+            max-width: 200px;
+            width: 100%;
+            border-radius: 1rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: white;
+            padding: 0.5rem;
+        }
+
+        .payment-note {
+            font-size: 0.8rem;
+            color: #f0abfc;
+            margin-top: 0.5rem;
+        }
+
+        .qq-card {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.2), rgba(139, 92, 246, 0.2));
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .copy-qq-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            color: #eef2ff;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-qq-btn:hover {
+            background: rgba(139, 92, 246, 0.4);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0 1rem;
+            font-size: 0.8rem;
+            color: #6b7280;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 640px) {
+            .card { padding: 1.2rem; }
+            .section-title { font-size: 1.3rem; }
+            .logo { font-size: 2.2rem; }
+            .price-card, .download-card { min-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <div class="logo">Color Archive</div>
+        <div class="tagline">Port & Official Mod based on ColorOS · realmeUI · OxygenOS</div>
+        <div class="btn-group">
+            <a href="https://docs.qq.com/doc/DUVJLeGxEVXZ5Z2JW#" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                📖 Onboarding & Pricing
+            </a>
+            <a href="https://docs.qq.com/form/page/DUVFvS29PT05URXBN" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+                📋 Paid Info Collection
+            </a>
+            <a href="guide_en.html" class="btn btn-outline">
+                📖 OS16 Flashing Guide
+            </a>
+        </div>
+    </div>
+
+    <!-- QQ Group Card -->
+    <div class="qq-card">
+        <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.3rem;">💬 Join Our Group</div>
+        <div style="font-size: 0.8rem; color: #9ca3af; margin-bottom: 0.8rem;">Feedback · Resources · Discussions</div>
+        <div style="font-size: 1.8rem; font-weight: 700; color: #c084fc; letter-spacing: 2px; margin: 0.5rem 0;">478538539</div>
+        <button class="copy-qq-btn" onclick="copyQQ()">📋 Copy Group ID</button>
+        <div style="font-size: 0.7rem; margin-top: 0.6rem; color: #6c7293;">Open QQ → Search → Enter ID → Join</div>
+    </div>
+
+    <!-- Preface + Team -->
+    <div class="card">
+        <div class="section-title">📌 Preface</div>
+        <ul style="margin-left: 1.5rem; color: #cbd5e6; margin-bottom: 1rem;">
+            <li>Please read all content before deciding to join</li>
+            <li>This document will be updated from time to time</li>
+            <li>Written specifically for <strong>Color Archive</strong>, don't mix it up</li>
+            <li>Respect originality, likes/comments are welcome</li>
+        </ul>
+        <div class="qa-item" style="border-bottom: none; margin-bottom: 0;">
+            <div class="qa-question">🧑‍🤝‍🧑 Does Color Archive have team support?</div>
+            <div class="qa-answer">9RT: 3 people (me, B.lu, nby)<br>GT/VS: bzdsbzda B.lu (nby assists, tech support)</div>
+        </div>
+    </div>
+
+    <!-- Free Builds Download -->
+    <div class="card">
+        <div class="section-title">🎁 Free Builds</div>
+        <p style="margin-bottom: 0.8rem;">Free public versions, compatible with: <strong>OnePlus 9RT / realme GT</strong> etc.</p>
+        <div class="download-grid">
+            <div class="download-card">
+                <div>🌐 Overseas Mirror</div>
+                <div style="font-size: 0.7rem; color: #9ca3af; margin: 0.3rem 0;">SourceForge</div>
+                <a href="https://sourceforge.net/projects/color/files/" target="_blank" rel="noopener noreferrer" class="btn btn-success" style="margin-top: 0.5rem; padding: 0.4rem 1rem; font-size: 0.85rem;">
+                    📥 Download
+                </a>
+            </div>
+            <div class="download-card">
+                <div>🇨🇳 China Mirror</div>
+                <div style="font-size: 0.7rem; color: #9ca3af; margin: 0.3rem 0;">123 Cloud Drive</div>
+                <a href="https://www.123865.com/s/519Cvd-MPfKv" target="_blank" rel="noopener noreferrer" class="btn btn-success" style="margin-top: 0.5rem; padding: 0.4rem 1rem; font-size: 0.85rem;">
+                    📥 Download
+                </a>
+            </div>
+        </div>
+        <div class="link-note" style="text-align: center; margin-top: 0.8rem; font-size: 0.75rem; color: #6c7293;">
+            ⚡ Free builds are cost-free, paid versions include more devices and updates
+        </div>
+    </div>
+
+    <!-- Device Support Status -->
+    <div class="card">
+        <div class="section-title">📱 Device Support Status</div>
+        <div style="margin-bottom: 0.5rem;">
+            <div style="font-size: 0.85rem; color: #9ca3af;">✅ Currently Supported</div>
+            <div class="device-list">
+                <span class="device-tag support">OnePlus 9RT</span>
+                <span class="device-tag support">Realme GT</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment QR Code -->
+    <div class="card">
+        <div class="section-title">💳 Payment QR Code</div>
+        <div class="qr-container">
+            <img src="payment-qr.jpg" alt="Payment QR Code" class="qr-img" onerror="this.style.display='none'; this.nextSibling.style.display='block';">
+            <p style="display: none; color: #f0abfc;">Please upload payment QR code as payment-qr.jpg</p>
+            <div class="payment-note">💰 After payment, take a screenshot and upload it when filling out the form below</div>
+        </div>
+    </div>
+
+    <!-- Paid Info Collection -->
+    <div class="card">
+        <div class="section-title">📋 Paid Info Collection</div>
+        <p style="margin-bottom: 1rem;">Read the "Onboarding Doc" first, then fill out the "Paid Info Collection" form.</p>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;">
+            <a href="https://docs.qq.com/doc/DUVJLeGxEVXZ5Z2JW#" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                📖 Onboarding Doc
+            </a>
+            <a href="https://docs.qq.com/form/page/DUVFvS29PT05URXBN" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+                📋 Paid Info Collection
+            </a>
+        </div>
+        <p style="font-size: 0.8rem; margin-top: 1rem; color: #6c7293; text-align: center;">
+            Please upload your payment screenshot in the form, and check your email for updates
+        </p>
+    </div>
+
+    <!-- Pricing -->
+    <div class="card" id="pricing">
+        <div class="section-title">🎫 Pricing</div>
+        <div class="price-grid">
+            <div class="price-card">
+                <div>📦 Single Build + Updates</div>
+                <div class="price-number">30 RMD</div>
+                <div class="price-desc">Includes: current build + future minor updates</div>
+            </div>
+            <div class="price-card">
+                <div>🎁 Dual Builds</div>
+                <div class="price-number">50 RMB</div>
+                <div class="price-desc">Includes: two builds (different devices/versions) + updates</div>
+            </div>
+        </div>
+        <div style="background: rgba(0,0,0,0.3); border-radius: 1.2rem; padding: 1rem; margin-top: 0.5rem;">
+            <div style="font-weight: 600; margin-bottom: 0.8rem;">✨ Exclusive Add-ons for Members (50% off)</div>
+            <div class="service-item">
+                <span class="service-name">🔧 Flashing Service</span>
+                <span class="service-price">30 RMB (50% off)</span>
+            </div>
+            <div class="service-item">
+                <span class="service-name">🩹 Brick Repair</span>
+                <span class="service-price">20 RMB (50% off)</span>
+            </div>
+            <div style="font-size: 0.75rem; color: #9ca3af; margin-top: 0.8rem; text-align: center;">
+                * Available only to onboarded users
+            </div>
+        </div>
+    </div>
+
+    <!-- Requirements -->
+    <div class="card">
+        <div class="section-title">⚙️ Basic Requirements</div>
+        <div class="qa-answer" style="padding-left: 1rem;">
+            <p>1️⃣ Device with unlockable BootLoader<br>
+            2️⃣ Released after 2020<br>
+            3️⃣ ab/abb partition type<br>
+            4️⃣ Has a certain user base<br>
+            5️⃣ Can provide test device (borrow or donate)</p>
+        </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="card" id="faq">
+        <div class="section-title">❓ FAQ</div>
+        <div class="qa-item"><div class="qa-question">🔧 Does installing Color Archive remove cloud control?</div><div class="qa-answer">ColorOS's cloud control strategy is centralized yet scattered. Cannot modify for specific needs; keeping it helps with future features.</div></div>
+        <div class="qa-item"><div class="qa-question">📦 Upload requirements? Can TWRP flash it?</div><div class="qa-answer">No. Requires a specific method to flash.</div></div>
+        <div class="qa-item"><div class="qa-question">⏳ How long until I receive the build? Where?</div><div class="qa-answer">Time varies. Will be sent to the email you provided. Please don't ask frequently.</div></div>
+        <div class="qa-item"><div class="qa-question">🔄 Will I get free updates later?</div><div class="qa-answer">Yes. You need to re-onboard for each minor version update (e.g., 16.0.1 → 16.0.3).</div></div>
+        <div class="qa-item"><div class="qa-question">📱 Can I relock BootLoader after flashing?</div><div class="qa-answer">No, Color Archive is a third-party system.</div></div>
+        <div class="qa-item"><div class="qa-question">🆙 Received official OTA after flashing, can I upgrade?</div><div class="qa-answer">Yes. </div></div>
+    </div>
+
+    <!-- Flashing Failure -->
+    <div class="card">
+        <div class="section-title">⚠️ Flashing Failed?</div>
+        <div class="qa-question">Why can't I boot normally?</div>
+        <div class="qa-answer">Possible causes: network issues, insufficient storage, corrupted system files, software conflicts. Check community discussions or official docs.</div>
+    </div>
+
+    <footer>
+        Color Archive · Port & Official Mod Project | Respect originality, communicate reasonably<br>
+        Free builds are cost-free, paid versions include updates & support | CoolAPK: 不知道是不知道啊 · Color OS port Hub Team
+    </footer>
+</div>
+
+<script>
+function copyQQ() {
+    const qq = "478538539";
+    navigator.clipboard.writeText(qq).then(() => {
+        alert("QQ group ID copied: " + qq);
+    }).catch(() => {
+        prompt("Manually copy group ID:", qq);
+    });
+}
+</script>
+</body>
+</html>
