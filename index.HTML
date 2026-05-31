@@ -1,491 +1,360 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Color Archive | Port · Official Mod Fusion</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Color Archive | Port & Official Mod Fusion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --black: #000; --bg: #000; --bg1: #0a0a0a; --bg2: #111; --bg3: #1a1a1a; --bg4: #222;
+  --text: #f5f5f7; --text2: #a1a1a6; --text3: #6e6e73;
+  --violet: #a78bfa; --violet-dim: rgba(167,139,250,0.12);
+  --blue: #60a5fa; --green: #34d399; --green-dim: rgba(52,211,153,0.1);
+  --gradient: linear-gradient(135deg, #a78bfa, #818cf8, #60a5fa);
+  --radius: 28px; --radius-sm: 18px; --max-w: 1080px;
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--bg); font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  color: var(--text); line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
 
-        body {
-            background: #0a0c15;
-            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            color: #eef2ff;
-            line-height: 1.5;
-            padding: 2rem 1rem;
-        }
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9999; height: 52px;
+  display: flex; align-items: center; justify-content: center; gap: 2.2rem;
+  background: rgba(0,0,0,0.72); backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.82rem; font-weight: 500; transition: background 0.4s;
+}
+.nav-logo { font-weight: 700; font-size: 0.9rem; letter-spacing: -0.02em; color: #fff; }
+.nav a:not(.nav-logo) { color: #a1a1a6; transition: color 0.2s; }
+.nav a:not(.nav-logo):hover { color: #fff; }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 20% 30%, rgba(79, 70, 229, 0.2), transparent 60%),
-                        radial-gradient(circle at 85% 70%, rgba(6, 182, 212, 0.2), transparent 60%);
-            z-index: -2;
-            pointer-events: none;
-        }
+.sec {
+  min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 7rem 2rem 5rem; position: relative; overflow: hidden;
+}
+.sec-inner { max-width: var(--max-w); width: 100%; text-align: center; }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
+.eyebrow { font-size: 1.15rem; font-weight: 500; color: var(--violet); letter-spacing: 0.03em; margin-bottom: 1rem; }
+.headline { font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 700; letter-spacing: -0.035em; line-height: 1.08; margin-bottom: 1.2rem; }
+.subhead { font-size: clamp(1.05rem, 2vw, 1.35rem); color: var(--text2); font-weight: 400; max-width: 580px; margin: 0 auto; line-height: 1.6; }
+.headline-gradient { background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
-        .card {
-            background: rgba(18, 22, 35, 0.7);
-            backdrop-filter: blur(12px);
-            border-radius: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 1.8rem;
-            margin-bottom: 2rem;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.9rem 2.2rem; border-radius: 980px; font-size: 0.95rem; font-weight: 500;
+  border: none; cursor: pointer; transition: all 0.35s var(--ease); position: relative; overflow: hidden;
+}
+.btn-violet { background: var(--gradient); color: #000; box-shadow: 0 2px 20px rgba(167,139,250,0.25); }
+.btn-violet:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 8px 40px rgba(167,139,250,0.4); }
+.btn-ghost { background: rgba(255,255,255,0.06); color: var(--text); border: 1px solid rgba(255,255,255,0.12); }
+.btn-ghost:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.25); transform: translateY(-2px); }
+.btn-green { background: var(--green); color: #000; font-weight: 600; }
+.btn-green:hover { transform: translateY(-2px) scale(1.02); filter: brightness(1.1); }
+.btn-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5);
-            border-color: rgba(139, 92, 246, 0.3);
-        }
+.hero { background: var(--bg); padding-top: 52px; }
+.hero-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.hero-orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.15; animation: orbFloat 20s ease-in-out infinite; }
+.hero-orb-1 { width: 500px; height: 500px; background: #a78bfa; top: -10%; left: 15%; }
+.hero-orb-2 { width: 400px; height: 400px; background: #60a5fa; bottom: -5%; right: 10%; animation-delay: -7s; }
+.hero-orb-3 { width: 300px; height: 300px; background: #818cf8; top: 40%; left: 60%; animation-delay: -14s; }
+@keyframes orbFloat { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(30px,-40px) scale(1.05)} 66%{transform:translate(-20px,20px) scale(0.95)} }
 
-        .hero {
-            text-align: center;
-            padding: 1rem 0 2rem;
-        }
+.hero-title { font-size: clamp(3.5rem, 10vw, 7rem); font-weight: 800; letter-spacing: -0.05em; line-height: 0.95; margin-bottom: 1.5rem; }
+.hero-sub { font-size: clamp(1.1rem, 2.5vw, 1.5rem); color: var(--text2); max-width: 520px; margin: 0 auto 3rem; }
+.hero-meta { display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap; margin-top: 4rem; padding-top: 3rem; border-top: 1px solid rgba(255,255,255,0.06); }
+.hero-stat { text-align: center; }
+.hero-stat-num { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero-stat-label { font-size: 0.8rem; color: var(--text3); margin-top: 0.3rem; }
 
-        .logo {
-            font-size: 3rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #c084fc, #60a5fa);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: -0.02em;
-            margin-bottom: 0.5rem;
-        }
+.reveal { opacity: 0; transform: translateY(50px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
 
-        .tagline {
-            font-size: 1.1rem;
-            color: #9ca3af;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            display: inline-block;
-            padding-top: 0.8rem;
-        }
+.showcase { background: var(--bg1); }
+.showcase-card { background: var(--bg2); border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.06); overflow: hidden; max-width: 860px; margin: 2.5rem auto 0; }
+.showcase-hero { padding: 4rem 2rem; background: linear-gradient(180deg, rgba(167,139,250,0.06) 0%, transparent 100%); position: relative; }
+.showcase-hero::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 200px; height: 1px; background: var(--gradient); }
+.showcase-big { font-size: clamp(2.5rem, 5vw, 3.8rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.8rem; }
+.showcase-desc { font-size: 1.1rem; color: var(--text2); max-width: 450px; margin: 0 auto; }
+.showcase-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid rgba(255,255,255,0.06); }
+.showcase-item { padding: 2rem 1.5rem; text-align: center; border-right: 1px solid rgba(255,255,255,0.06); transition: background 0.3s; }
+.showcase-item:last-child { border-right: none; }
+.showcase-item:hover { background: rgba(255,255,255,0.02); }
+.showcase-item-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+.showcase-item-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; }
+.showcase-item-desc { font-size: 0.8rem; color: var(--text3); line-height: 1.5; }
 
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 1.2rem;
-            flex-wrap: wrap;
-            margin: 2rem 0 1rem;
-        }
+.features { background: var(--bg); }
+.feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,0.04); border-radius: var(--radius); overflow: hidden; margin-top: 3rem; }
+.feat-cell { background: var(--bg1); padding: 2.5rem 2rem; transition: background 0.4s; }
+.feat-cell:hover { background: var(--bg2); }
+.feat-icon { font-size: 2.2rem; margin-bottom: 1.2rem; }
+.feat-title { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.5rem; }
+.feat-desc { font-size: 0.85rem; color: var(--text3); line-height: 1.65; }
 
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 0.75rem 1.8rem;
-            border-radius: 60px;
-            font-weight: 500;
-            color: #eef2ff;
-            text-decoration: none;
-            transition: all 0.2s;
-            backdrop-filter: blur(4px);
-        }
+.devices { background: var(--bg1); }
+.device-row { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 2.5rem; }
+.device-pill { display: flex; align-items: center; gap: 0.7rem; padding: 0.8rem 1.8rem; background: var(--green-dim); border: 1px solid rgba(52,211,153,0.2); border-radius: 980px; font-weight: 500; font-size: 0.95rem; color: var(--green); transition: all 0.3s; }
+.device-pill:hover { background: rgba(52,211,153,0.15); border-color: rgba(52,211,153,0.4); transform: translateY(-2px); }
+.device-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px rgba(52,211,153,0.5); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
 
-        .btn-primary {
-            background: linear-gradient(105deg, #4f46e5, #7c3aed);
-            border: none;
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-        }
+.dl { background: var(--bg); }
+.dl-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; max-width: 640px; margin: 2.5rem auto 0; }
+.dl-card { background: var(--bg2); border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.06); padding: 2.5rem 2rem; text-align: center; transition: all 0.35s var(--ease); }
+.dl-card:hover { transform: translateY(-6px); border-color: rgba(167,139,250,0.2); box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+.dl-icon { font-size: 2.8rem; margin-bottom: 1rem; }
+.dl-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.3rem; }
+.dl-desc { font-size: 0.8rem; color: var(--text3); margin-bottom: 1.5rem; }
 
-        .btn-primary:hover {
-            transform: scale(1.02);
-            background: linear-gradient(105deg, #6366f1, #8b5cf6);
-            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.5);
-        }
+.pricing { background: var(--bg1); }
+.price-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; max-width: 640px; margin: 2.5rem auto 0; }
+.price-card { background: var(--bg2); border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.06); padding: 3rem 2rem; text-align: center; position: relative; transition: all 0.35s var(--ease); }
+.price-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+.price-card.hot { border-color: var(--violet); background: linear-gradient(180deg, rgba(167,139,250,0.06), var(--bg2)); }
+.price-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--gradient); color: #000; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; padding: 0.35rem 1.2rem; border-radius: 980px; text-transform: uppercase; }
+.price-label { font-size: 0.95rem; color: var(--text2); margin-bottom: 0.6rem; }
+.price-num { font-size: 4rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
+.price-unit { font-size: 1rem; font-weight: 400; color: var(--text3); }
+.price-desc { font-size: 0.82rem; color: var(--text3); margin-top: 1.2rem; line-height: 1.7; }
 
-        .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(139, 92, 246, 0.6);
-        }
+.extras { max-width: 460px; margin: 2rem auto 0; background: var(--bg3); border-radius: var(--radius-sm); padding: 1.8rem; border: 1px solid rgba(255,255,255,0.06); }
+.extras-title { font-size: 0.85rem; font-weight: 600; color: var(--violet); margin-bottom: 1rem; }
+.extras-row { display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.extras-row:last-child { border-bottom: none; }
+.extras-name { color: var(--text2); font-size: 0.9rem; }
+.extras-price { color: var(--violet); font-weight: 600; font-size: 0.9rem; }
 
-        .btn-success {
-            background: linear-gradient(105deg, #059669, #10b981);
-            border: none;
-        }
+.tool { background: var(--bg); }
+.tool-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin: 1.8rem 0 2.5rem; }
+.tool-tag { padding: 0.4rem 1rem; border-radius: 980px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); font-size: 0.78rem; color: var(--text3); transition: all 0.3s; }
+.tool-tag:hover { background: rgba(255,255,255,0.08); color: var(--text2); }
 
-        .btn-success:hover {
-            background: linear-gradient(105deg, #10b981, #34d399);
-            transform: scale(1.02);
-        }
+.contact { background: var(--bg1); }
+.qq-box { background: linear-gradient(135deg, rgba(167,139,250,0.08), rgba(96,165,250,0.08)); border: 1px solid rgba(167,139,250,0.15); border-radius: var(--radius); padding: 3.5rem 2rem; max-width: 480px; margin: 0 auto; }
+.qq-num { font-size: 3.5rem; font-weight: 800; letter-spacing: 0.12em; background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent; margin: 1rem 0; }
 
-        .section-title {
-            font-size: 1.6rem;
-            font-weight: 600;
-            margin-bottom: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            border-left: 4px solid #8b5cf6;
-            padding-left: 1rem;
-        }
+.faq { background: var(--bg); }
+.faq-list { max-width: 680px; width: 100%; margin: 2.5rem auto 0; }
+.faq-item { border-bottom: 1px solid rgba(255,255,255,0.06); padding: 1.6rem 0; }
+.faq-q { font-size: 1rem; font-weight: 600; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: color 0.2s; }
+.faq-q:hover { color: var(--violet); }
+.faq-q::after { content: '+'; font-size: 1.5rem; font-weight: 300; color: var(--text3); transition: transform 0.35s var(--ease); }
+.faq-item.open .faq-q::after { transform: rotate(45deg); color: var(--violet); }
+.faq-a { font-size: 0.88rem; color: var(--text2); line-height: 1.75; max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.45s var(--ease), opacity 0.35s, margin 0.35s; }
+.faq-item.open .faq-a { max-height: 250px; opacity: 1; margin-top: 0.7rem; }
 
-        .qa-item {
-            margin-bottom: 1.5rem;
-            border-bottom: 1px dashed rgba(255,255,255,0.08);
-            padding-bottom: 1.2rem;
-        }
+.foot { padding: 4rem 2rem 2.5rem; border-top: 1px solid rgba(255,255,255,0.06); text-align: center; }
+.foot-links { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+.foot-links a { color: var(--text3); font-size: 0.85rem; transition: color 0.2s; }
+.foot-links a:hover { color: var(--text); }
+.foot-copy { font-size: 0.72rem; color: var(--text3); line-height: 2; }
 
-        .qa-question {
-            font-weight: 600;
-            color: #c4b5fd;
-            margin-bottom: 0.4rem;
-            font-size: 1.05rem;
-        }
-
-        .qa-answer {
-            color: #d1d5db;
-            padding-left: 0.5rem;
-            border-left: 2px solid rgba(139, 92, 246, 0.4);
-        }
-
-        .price-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin: 1rem 0 0.5rem;
-        }
-
-        .price-card {
-            flex: 1;
-            min-width: 200px;
-            background: rgba(0, 0, 0, 0.35);
-            border-radius: 1.5rem;
-            padding: 1.2rem;
-            border: 1px solid rgba(255,255,255,0.1);
-            text-align: center;
-        }
-
-        .price-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #f0abfc;
-            margin: 0.5rem 0;
-        }
-
-        .price-desc {
-            font-size: 0.85rem;
-            color: #9ca3af;
-            margin-top: 0.5rem;
-        }
-
-        .service-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.6rem 0;
-            border-bottom: 1px dashed rgba(255,255,255,0.1);
-        }
-
-        .service-name {
-            color: #cbd5e6;
-        }
-
-        .service-price {
-            color: #f0abfc;
-            font-weight: 600;
-        }
-
-        .download-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .download-card {
-            flex: 1;
-            min-width: 180px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 1.2rem;
-            padding: 1rem;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .device-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-
-        .device-tag {
-            background: rgba(139, 92, 246, 0.2);
-            border: 1px solid rgba(139, 92, 246, 0.5);
-            border-radius: 60px;
-            padding: 0.5rem 1.2rem;
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-
-        .device-tag.support {
-            background: rgba(34, 197, 94, 0.15);
-            border-color: rgba(34, 197, 94, 0.5);
-            color: #4ade80;
-        }
-
-        .qr-container {
-            text-align: center;
-            margin: 1rem 0;
-        }
-
-        .qr-img {
-            max-width: 200px;
-            width: 100%;
-            border-radius: 1rem;
-            border: 1px solid rgba(255,255,255,0.2);
-            background: white;
-            padding: 0.5rem;
-        }
-
-        .payment-note {
-            font-size: 0.8rem;
-            color: #f0abfc;
-            margin-top: 0.5rem;
-        }
-
-        .qq-card {
-            background: linear-gradient(135deg, rgba(79, 70, 229, 0.2), rgba(139, 92, 246, 0.2));
-            border: 1px solid rgba(139, 92, 246, 0.4);
-            border-radius: 1.2rem;
-            padding: 1.2rem;
-            text-align: center;
-            margin: 1.5rem 0;
-        }
-
-        .copy-qq-btn {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 0.4rem 1.2rem;
-            border-radius: 40px;
-            color: #eef2ff;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .copy-qq-btn:hover {
-            background: rgba(139, 92, 246, 0.4);
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem 0 1rem;
-            font-size: 0.8rem;
-            color: #6b7280;
-            border-top: 1px solid rgba(255,255,255,0.06);
-            margin-top: 2rem;
-        }
-
-        @media (max-width: 640px) {
-            .card { padding: 1.2rem; }
-            .section-title { font-size: 1.3rem; }
-            .logo { font-size: 2.2rem; }
-            .price-card, .download-card { min-width: 100%; }
-        }
-    </style>
+@media (max-width: 768px) {
+  .sec { padding: 5rem 1.2rem 3.5rem; }
+  .nav { gap: 1.2rem; font-size: 0.72rem; padding: 0 1rem; }
+  .feat-grid, .showcase-grid { grid-template-columns: 1fr; }
+  .showcase-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .showcase-item:last-child { border-bottom: none; }
+  .dl-cards, .price-cards { grid-template-columns: 1fr; max-width: 380px; }
+  .hero-meta { gap: 2rem; }
+  .hero-stat-num { font-size: 2rem; }
+  .btn-group { flex-direction: column; align-items: center; }
+  .btn { width: 100%; max-width: 320px; }
+}
+</style>
 </head>
 <body>
-<div class="container">
-    <div class="hero">
-        <div class="logo">Color Archive</div>
-        <div class="tagline">Port & Official Mod based on ColorOS · realmeUI · OxygenOS</div>
-        <div class="btn-group">
-            <a href="https://docs.qq.com/doc/DUVJLeGxEVXZ5Z2JW#" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-                📖 Onboarding & Pricing
-            </a>
-            <a href="https://docs.qq.com/form/page/DUVFvS29PT05URXBN" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
-                📋 Paid Info Collection
-            </a>
-            <a href="guide_en.html" class="btn btn-outline">
-                📖 OS16 Flashing Guide
-            </a>
-        </div>
-    </div>
 
-    <!-- QQ Group Card -->
-    <div class="qq-card">
-        <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.3rem;">💬 Join Our Group</div>
-        <div style="font-size: 0.8rem; color: #9ca3af; margin-bottom: 0.8rem;">Feedback · Resources · Discussions</div>
-        <div style="font-size: 1.8rem; font-weight: 700; color: #c084fc; letter-spacing: 2px; margin: 0.5rem 0;">478538539</div>
-        <button class="copy-qq-btn" onclick="copyQQ()">📋 Copy Group ID</button>
-        <div style="font-size: 0.7rem; margin-top: 0.6rem; color: #6c7293;">Open QQ → Search → Enter ID → Join</div>
-    </div>
+<nav class="nav">
+  <a href="#" class="nav-logo">Color Archive</a>
+  <a href="#showcase">Features</a>
+  <a href="#devices">Devices</a>
+  <a href="#dl">Download</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#tool">Toolbox</a>
+  <a href="#faq">FAQ</a>
+  <a href="#contact">Contact</a>
+</nav>
 
-    <!-- Preface + Team -->
-    <div class="card">
-        <div class="section-title">📌 Preface</div>
-        <ul style="margin-left: 1.5rem; color: #cbd5e6; margin-bottom: 1rem;">
-            <li>Please read all content before deciding to join</li>
-            <li>This document will be updated from time to time</li>
-            <li>Written specifically for <strong>Color Archive</strong>, don't mix it up</li>
-            <li>Respect originality, likes/comments are welcome</li>
-        </ul>
-        <div class="qa-item" style="border-bottom: none; margin-bottom: 0;">
-            <div class="qa-question">🧑‍🤝‍🧑 Does Color Archive have team support?</div>
-            <div class="qa-answer">9RT: 3 people (me, B.lu, nby)<br>GT/VS: bzdsbzda B.lu (nby assists, tech support)</div>
-        </div>
+<section class="sec hero">
+  <div class="hero-bg"><div class="hero-orb hero-orb-1"></div><div class="hero-orb hero-orb-2"></div><div class="hero-orb hero-orb-3"></div></div>
+  <div class="sec-inner">
+    <p class="eyebrow reveal">Based on ColorOS · realmeUI · OxygenOS</p>
+    <h1 class="hero-title headline-gradient reveal reveal-delay-1">Color Archive</h1>
+    <p class="hero-sub reveal reveal-delay-2">Ported & fused system firmware. A new life for your device.</p>
+    <div class="btn-group reveal reveal-delay-3">
+      <a href="#dl" class="btn btn-violet">Download Free</a>
+      <a href="#pricing" class="btn btn-ghost">View Pricing</a>
     </div>
-
-    <!-- Free Builds Download -->
-    <div class="card">
-        <div class="section-title">🎁 Free Builds</div>
-        <p style="margin-bottom: 0.8rem;">Free public versions, compatible with: <strong>OnePlus 9RT / realme GT</strong> etc.</p>
-        <div class="download-grid">
-            <div class="download-card">
-                <div>🌐 Overseas Mirror</div>
-                <div style="font-size: 0.7rem; color: #9ca3af; margin: 0.3rem 0;">SourceForge</div>
-                <a href="https://sourceforge.net/projects/color/files/" target="_blank" rel="noopener noreferrer" class="btn btn-success" style="margin-top: 0.5rem; padding: 0.4rem 1rem; font-size: 0.85rem;">
-                    📥 Download
-                </a>
-            </div>
-            <div class="download-card">
-                <div>🇨🇳 China Mirror</div>
-                <div style="font-size: 0.7rem; color: #9ca3af; margin: 0.3rem 0;">123 Cloud Drive</div>
-                <a href="https://www.123865.com/s/519Cvd-MPfKv" target="_blank" rel="noopener noreferrer" class="btn btn-success" style="margin-top: 0.5rem; padding: 0.4rem 1rem; font-size: 0.85rem;">
-                    📥 Download
-                </a>
-            </div>
-        </div>
-        <div class="link-note" style="text-align: center; margin-top: 0.8rem; font-size: 0.75rem; color: #6c7293;">
-            ⚡ Free builds are cost-free, paid versions include more devices and updates
-        </div>
+    <div class="hero-meta reveal">
+      <div class="hero-stat"><div class="hero-stat-num" data-count="5">0</div><div class="hero-stat-label">Devices</div></div>
+      <div class="hero-stat"><div class="hero-stat-num" data-count="30">0</div><div class="hero-stat-label">Starting at</div></div>
+      <div class="hero-stat"><div class="hero-stat-num" data-count="100">0</div><div class="hero-stat-label">Free Tool</div></div>
     </div>
+  </div>
+</section>
 
-    <!-- Device Support Status -->
-    <div class="card">
-        <div class="section-title">📱 Device Support Status</div>
-        <div style="margin-bottom: 0.5rem;">
-            <div style="font-size: 0.85rem; color: #9ca3af;">✅ Currently Supported</div>
-            <div class="device-list">
-                <span class="device-tag support">OnePlus 9RT</span>
-                <span class="device-tag support">Realme GT</span>
-            </div>
-        </div>
+<section class="sec showcase" id="showcase">
+  <div class="sec-inner">
+    <p class="eyebrow reveal">More Than a Port</p>
+    <h2 class="headline reveal reveal-delay-1">Deep Fusion,<br>Native Experience.</h2>
+    <p class="subhead reveal reveal-delay-2" style="margin-top:1rem;">Bringing ColorOS fluidity and polish to more devices.<br>Not a simple copy — a deep adaptation and optimization.</p>
+    <div class="showcase-card reveal reveal-delay-3">
+      <div class="showcase-hero">
+        <div class="showcase-big headline-gradient">ColorOS 16</div>
+        <div class="showcase-desc">Port · Mod · Fusion</div>
+      </div>
+      <div class="showcase-grid">
+        <div class="showcase-item"><div class="showcase-item-icon">⚡</div><div class="showcase-item-title">Tuned Performance</div><div class="showcase-item-desc">Per-device CPU scheduling and memory optimization</div></div>
+        <div class="showcase-item"><div class="showcase-item-icon">🎨</div><div class="showcase-item-title">Full Experience</div><div class="showcase-item-desc">Quantum Animation, Cross-Screen, Smart Sidebar — all included</div></div>
+        <div class="showcase-item"><div class="showcase-item-icon">🔒</div><div class="showcase-item-title">Secure & Stable</div><div class="showcase-item-desc">Based on official firmware with security patches retained</div></div>
+      </div>
     </div>
+  </div>
+</section>
 
-    <!-- Payment QR Code -->
-    <div class="card">
-        <div class="section-title">💳 Payment QR Code</div>
-        <div class="qr-container">
-            <img src="payment-qr.jpg" alt="Payment QR Code" class="qr-img" onerror="this.style.display='none'; this.nextSibling.style.display='block';">
-            <p style="display: none; color: #f0abfc;">Please upload payment QR code as payment-qr.jpg</p>
-            <div class="payment-note">💰 After payment, take a screenshot and upload it when filling out the form below</div>
-        </div>
+<section class="sec features" id="features">
+  <div class="sec-inner">
+    <p class="eyebrow reveal">Core Features</p>
+    <h2 class="headline reveal reveal-delay-1">Every Detail,<br>Refined.</h2>
+    <div class="feat-grid reveal reveal-delay-2">
+      <div class="feat-cell"><div class="feat-icon">⚡</div><div class="feat-title">Deep Optimization</div><div class="feat-desc">CPU, memory, and touch response fully tuned for native-level smoothness.</div></div>
+      <div class="feat-cell"><div class="feat-icon">🎨</div><div class="feat-title">Full ColorOS</div><div class="feat-desc">Quantum Animation Engine, Cross-Screen, Smart Sidebar — nothing missing.</div></div>
+      <div class="feat-cell"><div class="feat-icon">🔒</div><div class="feat-title">Secure & Stable</div><div class="feat-desc">Based on official firmware with security patch update channel preserved.</div></div>
+      <div class="feat-cell"><div class="feat-icon">🔄</div><div class="feat-title">Continuous Updates</div><div class="feat-desc">Paid version includes minor version updates, following official release cadence.</div></div>
+      <div class="feat-cell"><div class="feat-icon">🛠</div><div class="feat-title">Flash Tool</div><div class="feat-desc">配套 "不知道啊工具箱" — graphical interface, one-click flash.</div></div>
+      <div class="feat-cell"><div class="feat-icon">💬</div><div class="feat-title">Community</div><div class="feat-desc">QQ group for real-time support, direct communication with developers.</div></div>
     </div>
+  </div>
+</section>
 
-    <!-- Paid Info Collection -->
-    <div class="card">
-        <div class="section-title">📋 Paid Info Collection</div>
-        <p style="margin-bottom: 1rem;">Read the "Onboarding Doc" first, then fill out the "Paid Info Collection" form.</p>
-        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;">
-            <a href="https://docs.qq.com/doc/DUVJLeGxEVXZ5Z2JW#" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-                📖 Onboarding Doc
-            </a>
-            <a href="https://docs.qq.com/form/page/DUVFvS29PT05URXBN" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
-                📋 Paid Info Collection
-            </a>
-        </div>
-        <p style="font-size: 0.8rem; margin-top: 1rem; color: #6c7293; text-align: center;">
-            Please upload your payment screenshot in the form, and check your email for updates
-        </p>
+<section class="sec devices" id="devices">
+  <div class="sec-inner">
+    <p class="eyebrow reveal">Supported Devices</p>
+    <h2 class="headline reveal reveal-delay-1">Popular Models.</h2>
+    <p class="subhead reveal reveal-delay-2" style="margin-top:0.8rem;">Expanding support — more devices coming soon.</p>
+    <div class="device-row reveal reveal-delay-3">
+      <div class="device-pill"><div class="device-dot"></div>OnePlus 9RT</div>
+      <div class="device-pill"><div class="device-dot"></div>Realme GT</div>
+      <div class="device-pill"><div class="device-dot"></div>Realme GT2</div>
+      <div class="device-pill"><div class="device-dot"></div>Realme GT2 Pro</div>
+      <div class="device-pill"><div class="device-dot"></div>OnePlus 8T</div>
     </div>
+  </div>
+</section>
 
-    <!-- Pricing -->
-    <div class="card" id="pricing">
-        <div class="section-title">🎫 Pricing</div>
-        <div class="price-grid">
-            <div class="price-card">
-                <div>📦 Single Build + Updates</div>
-                <div class="price-number">30 RMD</div>
-                <div class="price-desc">Includes: current build + future minor updates</div>
-            </div>
-            <div class="price-card">
-                <div>🎁 Dual Builds</div>
-                <div class="price-number">50 RMB</div>
-                <div class="price-desc">Includes: two builds (different devices/versions) + updates</div>
-            </div>
-        </div>
-        <div style="background: rgba(0,0,0,0.3); border-radius: 1.2rem; padding: 1rem; margin-top: 0.5rem;">
-            <div style="font-weight: 600; margin-bottom: 0.8rem;">✨ Exclusive Add-ons for Members (50% off)</div>
-            <div class="service-item">
-                <span class="service-name">🔧 Flashing Service</span>
-                <span class="service-price">30 RMB (50% off)</span>
-            </div>
-            <div class="service-item">
-                <span class="service-name">🩹 Brick Repair</span>
-                <span class="service-price">20 RMB (50% off)</span>
-            </div>
-            <div style="font-size: 0.75rem; color: #9ca3af; margin-top: 0.8rem; text-align: center;">
-                * Available only to onboarded users
-            </div>
-        </div>
+<section class="sec dl" id="dl">
+  <div class="sec-inner">
+    <p class="eyebrow reveal">Community Edition</p>
+    <h2 class="headline reveal reveal-delay-1">Free Download,<br>Try Now.</h2>
+    <p class="subhead reveal reveal-delay-2" style="margin-top:0.8rem;">Community edition is free. Paid version includes more devices and ongoing updates.</p>
+    <div class="dl-cards reveal reveal-delay-3">
+      <div class="dl-card"><div class="dl-icon">🌐</div><div class="dl-title">Global Mirror</div><div class="dl-desc">SourceForge CDN</div><a href="https://sourceforge.net/projects/color/files/" target="_blank" rel="noopener" class="btn btn-green">Download</a></div>
+      <div class="dl-card"><div class="dl-icon">🇨🇳</div><div class="dl-title">China Mirror</div><div class="dl-desc">123 Cloud Storage</div><a href="https://www.123865.com/s/519Cvd-MPfKv" target="_blank" rel="noopener" class="btn btn-green">Download</a></div>
     </div>
+  </div>
+</section>
 
-    <!-- Requirements -->
-    <div class="card">
-        <div class="section-title">⚙️ Basic Requirements</div>
-        <div class="qa-answer" style="padding-left: 1rem;">
-            <p>1️⃣ Device with unlockable BootLoader<br>
-            2️⃣ Released after 2020<br>
-            3️⃣ ab/abb partition type<br>
-            4️⃣ Has a certain user base<br>
-            5️⃣ Can provide test device (borrow or donate)</p>
-        </div>
+<section class="sec pricing" id="pricing">
+  <div class="sec-inner">
+    <p class="eyebrow reveal">Pricing</p>
+    <h2 class="headline reveal reveal-delay-1">Simple & Transparent.</h2>
+    <div class="price-cards reveal reveal-delay-2">
+      <div class="price-card"><div class="price-label">Single + Updates</div><div class="price-num">¥30</div><div class="price-desc">Current version package<br>Minor version updates</div></div>
+      <div class="price-card hot"><div class="price-badge">Popular</div><div class="price-label">Dual Pack</div><div class="price-num">¥50</div><div class="price-desc">Two device/version packages<br>Minor version updates</div></div>
     </div>
-
-    <!-- FAQ -->
-    <div class="card" id="faq">
-        <div class="section-title">❓ FAQ</div>
-        <div class="qa-item"><div class="qa-question">🔧 Does installing Color Archive remove cloud control?</div><div class="qa-answer">ColorOS's cloud control strategy is centralized yet scattered. Cannot modify for specific needs; keeping it helps with future features.</div></div>
-        <div class="qa-item"><div class="qa-question">📦 Upload requirements? Can TWRP flash it?</div><div class="qa-answer">No. Requires a specific method to flash.</div></div>
-        <div class="qa-item"><div class="qa-question">⏳ How long until I receive the build? Where?</div><div class="qa-answer">Time varies. Will be sent to the email you provided. Please don't ask frequently.</div></div>
-        <div class="qa-item"><div class="qa-question">🔄 Will I get free updates later?</div><div class="qa-answer">Yes. You need to re-onboard for each minor version update (e.g., 16.0.1 → 16.0.3).</div></div>
-        <div class="qa-item"><div class="qa-question">📱 Can I relock BootLoader after flashing?</div><div class="qa-answer">No, Color Archive is a third-party system.</div></div>
-        <div class="qa-item"><div class="qa-question">🆙 Received official OTA after flashing, can I upgrade?</div><div class="qa-answer">Yes. </div></div>
+    <div class="extras reveal reveal-delay-3">
+      <div class="extras-title">Add-on Services (50% off for members)</div>
+      <div class="extras-row"><span class="extras-name">Flash Service</span><span class="extras-price">¥20</span></div>
+      <div class="extras-row"><span class="extras-name">Brick Recovery</span><span class="extras-price">¥15</span></div>
     </div>
+  </div>
+</section>
 
-    <!-- Flashing Failure -->
-    <div class="card">
-        <div class="section-title">⚠️ Flashing Failed?</div>
-        <div class="qa-question">Why can't I boot normally?</div>
-        <div class="qa-answer">Possible causes: network issues, insufficient storage, corrupted system files, software conflicts. Check community discussions or official docs.</div>
+<section class="sec tool" id="tool">
+  <div class="sec-inner">
+    <p class="eyebrow reveal">Companion Tool</p>
+    <h2 class="headline reveal reveal-delay-1">BzdaBox</h2>
+    <p class="subhead reveal reveal-delay-2" style="margin-top:0.8rem;">Free & open-source Android flash tool.<br>Works seamlessly with Color Archive packages.</p>
+    <div class="tool-tags reveal">
+      <span class="tool-tag">Fastboot / ADB</span><span class="tool-tag">Partition Flash</span><span class="tool-tag">One-Click Flash</span>
+      <span class="tool-tag">Device Info</span><span class="tool-tag">scrcpy Mirror</span><span class="tool-tag">Payload Extract</span>
+      <span class="tool-tag">Unlock / Lock</span><span class="tool-tag">Theme Switch</span>
     </div>
+    <div class="btn-group reveal">
+      <a href="https://github.com/one899/bzdabox/releases/download/v3.0/ColorArchive_Setup_3.0.exe" target="_blank" rel="noopener" class="btn btn-violet">Download Installer</a>
+      <a href="https://github.com/one899/bzdabox/releases" target="_blank" rel="noopener" class="btn btn-ghost">All Releases</a>
+      <a href="https://github.com/one899/bzdabox" target="_blank" rel="noopener" class="btn btn-ghost">View Source</a>
+    </div>
+    <p class="reveal" style="font-size:0.72rem;color:var(--text3);margin-top:1.2rem;">Free & Open Source · MIT License · Portable, no install</p>
+  </div>
+</section>
 
-    <footer>
-        Color Archive · Port & Official Mod Project | Respect originality, communicate reasonably<br>
-        Free builds are cost-free, paid versions include updates & support | CoolAPK: 不知道是不知道啊 · Color OS port Hub Team
-    </footer>
-</div>
+<section class="sec faq" id="faq">
+  <div class="sec-inner">
+    <p class="eyebrow reveal">FAQ</p>
+    <h2 class="headline reveal reveal-delay-1">Got Questions?</h2>
+    <div class="faq-list reveal reveal-delay-2">
+      <div class="faq-item"><div class="faq-q">Does Color Archive remove cloud control?</div><div class="faq-a">ColorOS cloud control is distributed across multiple modules. Retaining it helps with future feature compatibility.</div></div>
+      <div class="faq-item"><div class="faq-q">Can I flash via TWRP?</div><div class="faq-a">No. A dedicated method is required. We recommend using BzdaBox for flashing.</div></div>
+      <div class="faq-item"><div class="faq-q">How long until I receive the package?</div><div class="faq-a">Timing varies. The package will be sent to your email once ready. Please be patient.</div></div>
+      <div class="faq-item"><div class="faq-q">Are future updates free?</div><div class="faq-a">Yes. Minor version updates (e.g. 16.0.1 → 16.0.3) require re-submission.</div></div>
+      <div class="faq-item"><div class="faq-q">Can I relock the Bootloader?</div><div class="faq-a">No. Color Archive is a third-party system. Relocking will prevent booting.</div></div>
+      <div class="faq-item"><div class="faq-q">Can I install official OTA updates?</div><div class="faq-a">Yes. Download the official ISO → Extract → Run coloros_install.sh → Reboot.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec contact" id="contact">
+  <div class="sec-inner">
+    <div class="qq-box reveal">
+      <p style="font-size:1.05rem;color:var(--text2);">Join the Community</p>
+      <div class="qq-num">478538539</div>
+      <p style="font-size:0.85rem;color:var(--text2);margin-bottom:1.5rem;">Support · Resources · Discussion</p>
+      <button class="btn btn-violet" onclick="copyQQ()" style="font-size:0.9rem;">Copy Group ID</button>
+      <p style="font-size:0.68rem;color:var(--text3);margin-top:1rem;">Open QQ → Search → Enter group ID → Request to join</p>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="foot-links">
+    <a href="https://github.com/one899/color-archive" target="_blank">GitHub</a>
+    <a href="https://github.com/one899/bzdabox" target="_blank">Toolbox</a>
+    <a href="guide.html">Guide</a>
+    <a href="index.html">中文</a>
+    <a href="https://www.coolapk.com/u/36064349" target="_blank">Coolapk</a>
+  </div>
+  <div class="foot-copy">
+    Color Archive · Port & Official Mod Project<br>
+    Respect original work · Coolapk: 不知道是不知道啊<br>
+    © 2025 ColorArchive Team. Not affiliated with OPPO/OnePlus/realme.
+  </div>
+</footer>
 
 <script>
-function copyQQ() {
-    const qq = "478538539";
-    navigator.clipboard.writeText(qq).then(() => {
-        alert("QQ group ID copied: " + qq);
-    }).catch(() => {
-        prompt("Manually copy group ID:", qq);
-    });
-}
+const io=new IntersectionObserver(e=>{e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible')})},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
+const cIo=new IntersectionObserver(e=>{e.forEach(i=>{if(!i.isIntersecting)return;const el=i.target,t=+el.dataset.count;let c=0;const s=Math.max(1,Math.floor(t/40)),tm=setInterval(()=>{c+=s;if(c>=t){c=t;clearInterval(tm)}el.textContent=c},30);cIo.unobserve(el)})},{threshold:0.5});
+document.querySelectorAll('[data-count]').forEach(e=>cIo.observe(e));
+function copyQQ(){navigator.clipboard.writeText('478538539').then(()=>{const b=document.querySelector('.qq-box .btn'),o=b.textContent;b.textContent='Copied ✓';setTimeout(()=>b.textContent=o,2000)}).catch(()=>prompt('Copy:','478538539'))}
+document.querySelectorAll('.faq-q').forEach(q=>q.addEventListener('click',()=>q.parentElement.classList.toggle('open')));
+window.addEventListener('scroll',()=>{document.querySelector('.nav').style.background=window.scrollY>50?'rgba(0,0,0,0.88)':'rgba(0,0,0,0.72)'},{passive:true});
 </script>
 </body>
 </html>
