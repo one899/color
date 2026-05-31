@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>不知道啊工具箱 · Web 版</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   Web Toolbox — WinUI 3 Inspired
+   ═══════════════════════════════════════════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #0a0a0c;
+  --bg1: #111114;
+  --bg2: #18181c;
+  --bg3: #222228;
+  --bg4: #2a2a32;
+  --card: rgba(255,255,255,0.03);
+  --card-hover: rgba(255,255,255,0.05);
+  --border: rgba(255,255,255,0.06);
+  --border-hover: rgba(167,139,250,0.2);
+  --text: #f5f5f7;
+  --text2: #a1a1a6;
+  --text3: #6e6e73;
+  --text4: #48484a;
+  --accent: #a78bfa;
+  --accent2: #818cf8;
+  --blue: #60a5fa;
+  --green: #34d399;
+  --red: #f87171;
+  --amber: #fbbf24;
+  --gradient: linear-gradient(135deg, #a78bfa, #818cf8, #60a5fa);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --nav-w: 260px;
+  --titlebar-h: 48px;
+}
+html, body { height: 100%; overflow: hidden; }
+body {
+  background: var(--bg);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Microsoft YaHei', sans-serif;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 3px; }
+::selection { background: rgba(167,139,250,0.3); }
+
+/* ─── App Shell ─── */
+.app { display: flex; flex-direction: column; height: 100vh; }
+
+/* ─── Title Bar ─── */
+.titlebar {
+  height: var(--titlebar-h);
+  background: rgba(10,10,12,0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+  -webkit-app-region: drag;
+  flex-shrink: 0;
+}
+.titlebar-icon { font-size: 16px; }
+.titlebar-title { font-weight: 600; font-size: 12px; letter-spacing: -0.01em; }
+.titlebar-subtitle { color: var(--text3); font-size: 11px; margin-left: 4px; }
+.titlebar-spacer { flex: 1; }
+.titlebar-btn {
+  width: 32px; height: 32px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: transparent;
+  color: var(--text2);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  transition: background 0.2s, color 0.2s;
+  -webkit-app-region: no-drag;
+}
+.titlebar-btn:hover { background: var(--card-hover); color: var(--text); }
+
+/* ─── Main Area ─── */
+.main { display: flex; flex: 1; overflow: hidden; }
+
+/* ─── Sidebar ─── */
+.sidebar {
+  width: var(--nav-w);
+  background: rgba(10,10,12,0.6);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+.sidebar-section {
+  padding: 12px 12px 4px;
+}
+.sidebar-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0 8px 8px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--text2);
+  font-size: 13px;
+  transition: background 0.2s, color 0.2s;
+  user-select: none;
+}
+.nav-item:hover { background: var(--card-hover); color: var(--text); }
+.nav-item.active {
+  background: rgba(167,139,250,0.1);
+  color: var(--accent);
+}
+.nav-item .icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+.nav-badge {
+  margin-left: auto;
+  background: var(--accent);
+  color: #000;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 980px;
+}
+.sidebar-footer {
+  margin-top: auto;
+  padding: 12px;
+  border-top: 1px solid var(--border);
+}
+.device-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  font-size: 12px;
+}
+.status-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--text3);
+  flex-shrink: 0;
+}
+.status-dot.connected { background: var(--green); box-shadow: 0 0 8px rgba(52,211,153,0.4); }
+.status-dot.fastboot { background: var(--amber); box-shadow: 0 0 8px rgba(251,191,36,0.4); }
+
+/* ─── Content ─── */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.content-header {
+  padding: 20px 28px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.content-header h1 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.content-header p {
+  color: var(--text3);
+  font-size: 12px;
+  margin-top: 2px;
+}
+.content-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 28px;
+}
+
+/* ─── Cards ─── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  transition: border-color 0.3s, background 0.3s;
+}
+.card:hover { border-color: var(--border-hover); background: var(--card-hover); }
+.card-icon { font-size: 24px; margin-bottom: 12px; }
+.card-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.card-desc { font-size: 12px; color: var(--text3); line-height: 1.5; }
+.card-value { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 2px; }
+.card-value.green { color: var(--green); }
+.card-value.blue { color: var(--blue); }
+.card-value.accent { color: var(--accent); }
+
+/* ─── Buttons ─── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s;
+  font-family: inherit;
+}
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-accent { background: var(--accent); color: #000; }
+.btn-accent:hover:not(:disabled) { background: var(--accent2); }
+.btn-ghost { background: var(--card); color: var(--text); border: 1px solid var(--border); }
+.btn-ghost:hover:not(:disabled) { background: var(--card-hover); border-color: var(--border-hover); }
+.btn-danger { background: rgba(248,113,113,0.1); color: var(--red); border: 1px solid rgba(248,113,113,0.2); }
+.btn-danger:hover:not(:disabled) { background: rgba(248,113,113,0.2); }
+.btn-sm { padding: 5px 12px; font-size: 12px; }
+.btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ─── Input ─── */
+.input-group { display: flex; gap: 8px; margin-bottom: 12px; }
+.input {
+  flex: 1;
+  padding: 8px 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 13px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.input:focus { border-color: var(--accent); }
+.input::placeholder { color: var(--text4); }
+
+/* ─── Terminal ─── */
+.terminal {
+  background: #0c0c0e;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
+}
+.terminal-header {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.02);
+  border-bottom: 1px solid var(--border);
+  gap: 8px;
+  flex-shrink: 0;
+}
+.terminal-title { font-size: 11px; font-weight: 600; color: var(--text3); }
+.terminal-actions { margin-left: auto; display: flex; gap: 4px; }
+.terminal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.log-line { white-space: pre-wrap; word-break: break-all; }
+.log-line.info { color: var(--text2); }
+.log-line.success { color: var(--green); }
+.log-line.error { color: var(--red); }
+.log-line.warn { color: var(--amber); }
+.log-line.cmd { color: var(--accent); }
+.log-line .time { color: var(--text4); margin-right: 8px; }
+
+/* ─── Table ─── */
+.info-table { width: 100%; margin: 12px 0; }
+.info-row {
+  display: flex;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  font-size: 13px;
+}
+.info-label { width: 140px; color: var(--text3); flex-shrink: 0; }
+.info-value { color: var(--text); font-family: 'SF Mono', monospace; font-size: 12px; word-break: break-all; }
+
+/* ─── Drop Zone ─── */
+.drop-zone {
+  border: 2px dashed rgba(255,255,255,0.1);
+  border-radius: var(--radius);
+  padding: 40px;
+  text-align: center;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.drop-zone:hover, .drop-zone.drag-over {
+  border-color: var(--accent);
+  background: rgba(167,139,250,0.05);
+}
+.drop-zone-icon { font-size: 36px; margin-bottom: 12px; opacity: 0.5; }
+.drop-zone-text { color: var(--text3); font-size: 13px; }
+.drop-zone-hint { color: var(--text4); font-size: 11px; margin-top: 6px; }
+
+/* ─── Partition List ─── */
+.partition-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px;
+  margin: 12px 0;
+}
+.partition-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 12px;
+}
+.partition-item:hover { border-color: var(--border-hover); }
+.partition-item.selected { border-color: var(--accent); background: rgba(167,139,250,0.08); }
+.partition-check {
+  width: 16px; height: 16px;
+  border: 1.5px solid var(--text3);
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.partition-item.selected .partition-check {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+}
+
+/* ─── Progress ─── */
+.progress-bar {
+  height: 4px;
+  background: var(--bg3);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--gradient);
+  border-radius: 2px;
+  width: 0;
+  transition: width 0.3s;
+}
+
+/* ─── Page (views) ─── */
+.page { display: none; flex-direction: column; flex: 1; overflow: hidden; }
+.page.active { display: flex; }
+
+/* ─── Warning Banner ─── */
+.banner {
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.banner-warn { background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.15); color: var(--amber); }
+.banner-info { background: rgba(96,165,250,0.08); border: 1px solid rgba(96,165,250,0.15); color: var(--blue); }
+.banner-error { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.15); color: var(--red); }
+
+/* ─── Section Title ─── */
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ─── Toast ─── */
+.toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.toast {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: toast-in 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+.toast.success { border-color: rgba(52,211,153,0.3); }
+.toast.error { border-color: rgba(248,113,113,0.3); }
+@keyframes toast-in { from { opacity: 0; transform: translateY(10px); } }
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .content-body { padding: 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- Title Bar -->
+  <div class="titlebar">
+    <span class="titlebar-icon">🛠</span>
+    <span class="titlebar-title">不知道啊工具箱</span>
+    <span class="titlebar-subtitle">Web 版</span>
+    <div class="titlebar-spacer"></div>
+    <button class="titlebar-btn" onclick="window.open('https://github.com/one899/bzdabox','_blank')" title="GitHub">⬡</button>
+    <button class="titlebar-btn" onclick="window.location.href='../'" title="返回主页">⌂</button>
+  </div>
+
+  <div class="main">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">设备</div>
+        <div class="nav-item active" data-page="dashboard" onclick="switchPage('dashboard')">
+          <span class="icon">📊</span><span>仪表盘</span>
+        </div>
+        <div class="nav-item" data-page="device" onclick="switchPage('device')">
+          <span class="icon">📱</span><span>设备信息</span>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">操作</div>
+        <div class="nav-item" data-page="flash" onclick="switchPage('flash')">
+          <span class="icon">⚡</span><span>分区刷写</span>
+        </div>
+        <div class="nav-item" data-page="batch" onclick="switchPage('batch')">
+          <span class="icon">📦</span><span>一键全刷</span>
+        </div>
+        <div class="nav-item" data-page="lock" onclick="switchPage('lock')">
+          <span class="icon">🔓</span><span>解锁 / 上锁</span>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">工具</div>
+        <div class="nav-item" data-page="terminal" onclick="switchPage('terminal')">
+          <span class="icon">⌨️</span><span>终端</span>
+        </div>
+        <div class="nav-item" data-page="recovery" onclick="switchPage('recovery')">
+          <span class="icon">🔄</span><span>重启模式</span>
+        </div>
+      </div>
+      <div class="sidebar-footer">
+        <div class="device-status" id="deviceStatus">
+          <div class="status-dot" id="statusDot"></div>
+          <span id="statusText">未连接设备</span>
+        </div>
+        <div style="margin-top:8px;">
+          <button class="btn btn-accent btn-sm" style="width:100%;" id="btnConnect" onclick="connectDevice()">
+            连接设备
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="content">
+
+      <!-- Dashboard -->
+      <div class="page active" id="page-dashboard">
+        <div class="content-header">
+          <h1>仪表盘</h1>
+          <p>设备概览与快速操作</p>
+        </div>
+        <div class="content-body">
+          <div class="banner banner-info">
+            <span>ℹ</span>
+            <span>Web 版工具箱通过 WebUSB 连接 Android 设备，需要 Chrome/Edge 浏览器，且使用 USB 数据线连接。</span>
+          </div>
+          <div class="card-grid">
+            <div class="card">
+              <div class="card-icon">📱</div>
+              <div class="card-value green" id="dashStatus">未连接</div>
+              <div class="card-title">设备状态</div>
+              <div class="card-desc" id="dashMode">请使用 USB 数据线连接设备</div>
+            </div>
+            <div class="card">
+              <div class="card-icon">📋</div>
+              <div class="card-value accent" id="dashModel">—</div>
+              <div class="card-title">设备型号</div>
+              <div class="card-desc" id="dashProduct">连接后自动识别</div>
+            </div>
+            <div class="card">
+              <div class="card-icon">💾</div>
+              <div class="card-value blue" id="dashAndroid">—</div>
+              <div class="card-title">Android 版本</div>
+              <div class="card-desc" id="dashSDK">系统版本信息</div>
+            </div>
+            <div class="card">
+              <div class="card-icon">🔒</div>
+              <div class="card-value" id="dashLock">—</div>
+              <div class="card-title">Bootloader</div>
+              <div class="card-desc" id="dashLockDesc">锁定状态</div>
+            </div>
+          </div>
+
+          <div class="section-title">快速操作</div>
+          <div class="btn-group">
+            <button class="btn btn-ghost" onclick="switchPage('flash')">⚡ 分区刷写</button>
+            <button class="btn btn-ghost" onclick="switchPage('batch')">📦 一键全刷</button>
+            <button class="btn btn-ghost" onclick="rebootTo('bootloader')">🔄 重启到 Fastboot</button>
+            <button class="btn btn-ghost" onclick="rebootTo('system')">▶ 重启系统</button>
+          </div>
+
+          <div style="margin-top:20px;">
+            <div class="section-title">日志</div>
+            <div class="terminal" style="min-height:250px;">
+              <div class="terminal-header">
+                <span class="terminal-title">Console</span>
+                <div class="terminal-actions">
+                  <button class="btn btn-ghost btn-sm" onclick="clearLog()">清空</button>
+                </div>
+              </div>
+              <div class="terminal-body" id="logArea"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Device Info -->
+      <div class="page" id="page-device">
+        <div class="content-header">
+          <h1>设备信息</h1>
+          <p>查看连接设备的详细信息</p>
+        </div>
+        <div class="content-body">
+          <div class="btn-group" style="margin-bottom:16px;">
+            <button class="btn btn-accent" onclick="refreshDeviceInfo()">刷新信息</button>
+          </div>
+          <div class="info-table" id="deviceInfoTable">
+            <div class="info-row"><span class="info-label">设备状态</span><span class="info-value" id="infoStatus">未连接</span></div>
+            <div class="info-row"><span class="info-label">型号</span><span class="info-value" id="infoModel">—</span></div>
+            <div class="info-row"><span class="info-label">产品名</span><span class="info-value" id="infoProduct">—</span></div>
+            <div class="info-row"><span class="info-label">序列号</span><span class="info-value" id="infoSerial">—</span></div>
+            <div class="info-row"><span class="info-label">Android 版本</span><span class="info-value" id="infoAndroid">—</span></div>
+            <div class="info-row"><span class="info-label">SDK 版本</span><span class="info-value" id="infoSDK">—</span></div>
+            <div class="info-row"><span class="info-label">安全补丁</span><span class="info-value" id="infoPatch">—</span></div>
+            <div class="info-row"><span class="info-label">构建号</span><span class="info-value" id="infoBuild">—</span></div>
+            <div class="info-row"><span class="info-label">Bootloader</span><span class="info-value" id="infoBootloader">—</span></div>
+            <div class="info-row"><span class="info-label">基带版本</span><span class="info-value" id="infoBaseband">—</span></div>
+            <div class="info-row"><span class="info-label">内核版本</span><span class="info-value" id="infoKernel">—</span></div>
+            <div class="info-row"><span class="info-label">CPU 架构</span><span class="info-value" id="infoArch">—</span></div>
+            <div class="info-row"><span class="info-label">内存</span><span class="info-value" id="infoMem">—</span></div>
+            <div class="info-row"><span class="info-label">存储</span><span class="info-value" id="infoStorage">—</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flash -->
+      <div class="page" id="page-flash">
+        <div class="content-header">
+          <h1>分区刷写</h1>
+          <p>选择分区并刷入镜像文件</p>
+        </div>
+        <div class="content-body">
+          <div class="banner banner-warn">
+            <span>⚠</span>
+            <span>刷写操作有风险，请确保选择了正确的分区和镜像文件。错误的刷写可能导致设备无法启动。</span>
+          </div>
+
+          <div class="section-title">选择分区</div>
+          <div class="partition-grid" id="partitionGrid">
+            <div class="partition-item" data-partition="boot" onclick="togglePartition(this)"><div class="partition-check">✓</div><span>boot</span></div>
+            <div class="partition-item" data-partition="init_boot" onclick="togglePartition(this)"><div class="partition-check">✓</div><span>init_boot</span></div>
+            <div class="partition-item" data-partition="dtbo" onclick="togglePartition(this)"><div class="partition-check">✓</div><span>dtbo</span></div>
+            <div class="partition-item" data-partition="vbmeta" onclick="togglePartition(this)"><div class="partition-check">✓</div><span>vbmeta</span></div>
+            <div class="partition-item" data-partition="vendor_boot" onclick="togglePartition(this)"><div class="partition-check">✓</div><span>vendor_boot</span></div>
+            <div class="partition-item" data-partition="system" onclick="togglePartition(this)"><div class="partition-check">✓</div><span>system</span></div>
+            <div class="partition-item" data-partition="vendor" onclick="togglePartition(this)"><div class="partition-check">✓</div><span>vendor</span></div>
+            <div class="partition-item" data-partition="product" onclick="togglePartition(this)"><div class="partition-check">✓</div><span>product</span></div>
+            <div class="partition-item" data-partition="odm" onclick="togglePartition(this)"><div class="partition-check">✓</div><span>odm</span></div>
+            <div class="partition-item" data-partition="recovery" onclick="togglePartition(this)"><div class="partition-check">✓</div><span>recovery</span></div>
+          </div>
+
+          <div class="section-title" style="margin-top:16px;">选择镜像文件</div>
+          <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+            <div class="drop-zone-icon">📁</div>
+            <div class="drop-zone-text">拖放镜像文件到此处，或点击选择</div>
+            <div class="drop-zone-hint">支持 .img .bin .elf 等格式</div>
+          </div>
+          <input type="file" id="fileInput" accept=".img,.bin,.elf,.zip" style="display:none" onchange="handleFileSelect(this)">
+          <div id="selectedFile" style="margin-top:8px;font-size:12px;color:var(--text2);"></div>
+
+          <div class="progress-bar" id="flashProgress" style="display:none;">
+            <div class="progress-fill" id="flashProgressFill"></div>
+          </div>
+
+          <div class="btn-group" style="margin-top:16px;">
+            <button class="btn btn-accent" id="btnFlash" onclick="flashPartition()" disabled>刷写分区</button>
+            <button class="btn btn-ghost" onclick="flashPartition('--skip-reboot')">刷写（不重启）</button>
+          </div>
+
+          <div style="margin-top:16px;">
+            <div class="terminal">
+              <div class="terminal-header"><span class="terminal-title">Flash Log</span></div>
+              <div class="terminal-body" id="flashLog"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Batch Flash -->
+      <div class="page" id="page-batch">
+        <div class="content-header">
+          <h1>一键全刷</h1>
+          <p>批量刷入多个分区镜像</p>
+        </div>
+        <div class="content-body">
+          <div class="banner banner-warn">
+            <span>⚠</span>
+            <span>一键全刷将刷入所有选中的分区，请确保文件正确。此操作不可撤销。</span>
+          </div>
+
+          <div class="drop-zone" id="batchDropZone" onclick="document.getElementById('batchFileInput').click()">
+            <div class="drop-zone-icon">📦</div>
+            <div class="drop-zone-text">拖放多个镜像文件到此处</div>
+            <div class="drop-zone-hint">文件名需与分区名对应，如 boot.img、system.img</div>
+          </div>
+          <input type="file" id="batchFileInput" accept=".img,.bin,.elf" multiple style="display:none" onchange="handleBatchFileSelect(this)">
+          <div id="batchFileList" style="margin-top:12px;"></div>
+
+          <div class="progress-bar" id="batchProgress" style="display:none;">
+            <div class="progress-fill" id="batchProgressFill"></div>
+          </div>
+
+          <div class="btn-group" style="margin-top:16px;">
+            <button class="btn btn-accent" id="btnBatchFlash" onclick="batchFlash()" disabled>开始全刷</button>
+          </div>
+
+          <div style="margin-top:16px;">
+            <div class="terminal">
+              <div class="terminal-header"><span class="terminal-title">Batch Flash Log</span></div>
+              <div class="terminal-body" id="batchLog"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lock/Unlock -->
+      <div class="page" id="page-lock">
+        <div class="content-header">
+          <h1>解锁 / 上锁</h1>
+          <p>管理 Bootloader 锁定状态</p>
+        </div>
+        <div class="content-body">
+          <div class="banner banner-error">
+            <span>⚠</span>
+            <span>解锁 Bootloader 会清除设备所有数据。上锁后刷入非官方系统将无法启动。请谨慎操作。</span>
+          </div>
+
+          <div class="card-grid">
+            <div class="card">
+              <div class="card-icon">🔓</div>
+              <div class="card-title">解锁 Bootloader</div>
+              <div class="card-desc">允许刷入第三方系统。解锁会恢复出厂设置。</div>
+              <button class="btn btn-danger btn-sm" style="margin-top:12px;" onclick="fastbootCmd('flashing unlock')">解锁</button>
+            </div>
+            <div class="card">
+              <div class="card-icon">🔒</div>
+              <div class="card-title">上锁 Bootloader</div>
+              <div class="card-desc">恢复 Bootloader 锁定。仅限官方系统。</div>
+              <button class="btn btn-ghost btn-sm" style="margin-top:12px;" onclick="fastbootCmd('flashing lock')">上锁</button>
+            </div>
+          </div>
+
+          <div style="margin-top:16px;">
+            <div class="terminal">
+              <div class="terminal-header"><span class="terminal-title">Lock Log</span></div>
+              <div class="terminal-body" id="lockLog"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Terminal -->
+      <div class="page" id="page-terminal">
+        <div class="content-header">
+          <h1>终端</h1>
+          <p>手动执行 Fastboot / ADB 命令</p>
+        </div>
+        <div class="content-body" style="display:flex;flex-direction:column;gap:12px;">
+          <div class="banner banner-info">
+            <span>ℹ</span>
+            <span>输入 fastboot 或 adb 命令。例如：getvar all、reboot、devices</span>
+          </div>
+          <div class="input-group">
+            <select class="input" id="cmdType" style="flex:0 0 100px;">
+              <option value="fastboot">Fastboot</option>
+              <option value="adb">ADB</option>
+            </select>
+            <input class="input" id="cmdInput" placeholder="输入命令..." onkeydown="if(event.key==='Enter')execCmd()">
+            <button class="btn btn-accent" onclick="execCmd()">执行</button>
+          </div>
+          <div class="terminal" style="flex:1;">
+            <div class="terminal-header">
+              <span class="terminal-title">Terminal</span>
+              <div class="terminal-actions">
+                <button class="btn btn-ghost btn-sm" onclick="clearTerminalLog()">清空</button>
+              </div>
+            </div>
+            <div class="terminal-body" id="termLog"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recovery/Reboot -->
+      <div class="page" id="page-recovery">
+        <div class="content-header">
+          <h1>重启模式</h1>
+          <p>选择重启到不同模式</p>
+        </div>
+        <div class="content-body">
+          <div class="card-grid">
+            <div class="card" style="cursor:pointer;" onclick="rebootTo('system')">
+              <div class="card-icon">▶</div>
+              <div class="card-title">重启系统</div>
+              <div class="card-desc">正常重启到 Android 系统</div>
+            </div>
+            <div class="card" style="cursor:pointer;" onclick="rebootTo('bootloader')">
+              <div class="card-icon">⚡</div>
+              <div class="card-title">重启到 Fastboot</div>
+              <div class="card-desc">进入 Fastbootd/Fastboot 模式</div>
+            </div>
+            <div class="card" style="cursor:pointer;" onclick="rebootTo('recovery')">
+              <div class="card-icon">🔧</div>
+              <div class="card-title">重启到 Recovery</div>
+              <div class="card-desc">进入恢复模式</div>
+            </div>
+            <div class="card" style="cursor:pointer;" onclick="rebootTo('sideload')">
+              <div class="card-icon">📡</div>
+              <div class="card-title">重启到 Sideload</div>
+              <div class="card-desc">进入 ADB Sideload 模式</div>
+            </div>
+            <div class="card" style="cursor:pointer;" onclick="rebootTo('edl')">
+              <div class="card-icon">🆘</div>
+              <div class="card-title">重启到 EDL</div>
+              <div class="card-desc">进入紧急下载模式 (9008)</div>
+            </div>
+            <div class="card" style="cursor:pointer;" onclick="rebootTo('fastbootd')">
+              <div class="card-icon">🔄</div>
+              <div class="card-title">重启到 Fastbootd</div>
+              <div class="card-desc">进入用户空间 Fastboot</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
