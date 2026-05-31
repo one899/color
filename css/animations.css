@@ -1,0 +1,166 @@
+/* ═══════════════════════════════════════════════
+   Animations — Keyframes, Reveals, Transitions
+   ═══════════════════════════════════════════════ */
+
+/* ─── Scroll Reveal ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+.reveal-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ─── Stagger Delays ─── */
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+.delay-5 { transition-delay: 0.5s; }
+
+/* ─── Float Animation ─── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.animate-float { animation: float 6s ease-in-out infinite; }
+
+/* ─── Pulse Dot ─── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 12px rgba(52,211,153,0.5); }
+  50% { opacity: 0.5; box-shadow: 0 0 4px rgba(52,211,153,0.3); }
+}
+
+/* ─── Orb Float ─── */
+@keyframes orb-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -40px) scale(1.05); }
+  50% { transform: translate(-20px, 20px) scale(0.95); }
+  75% { transform: translate(15px, 30px) scale(1.02); }
+}
+.animate-orb { animation: orb-float 20s ease-in-out infinite; }
+
+/* ─── Gradient Shift ─── */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* ─── Rotate Slow ─── */
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-rotate { animation: rotate-slow 30s linear infinite; }
+
+/* ─── Scale Pulse ─── */
+@keyframes scale-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+/* ─── Text Clip Reveal ─── */
+.clip-reveal {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1s var(--ease-out);
+}
+.clip-reveal.visible {
+  clip-path: inset(0 0 0 0);
+}
+
+/* ─── Counter Number ─── */
+.counter-num {
+  display: inline-block;
+  transition: transform 0.1s;
+}
+
+/* ─── Magnetic Button Effect ─── */
+.magnetic-hover {
+  transition: transform 0.3s var(--ease);
+}
+
+/* ─── Glow Effect ─── */
+.glow {
+  position: relative;
+}
+.glow::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: var(--gradient);
+  z-index: -1;
+  opacity: 0;
+  filter: blur(20px);
+  transition: opacity 0.5s;
+}
+.glow:hover::after { opacity: 0.3; }
+
+/* ─── Shimmer Loading ─── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.05) 50%, transparent 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* ─── Marquee ─── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  animation: marquee 30s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+
+/* ─── Parallax Layer ─── */
+.parallax-layer {
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* ─── GSAP-specific classes ─── */
+.gsap-split-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(100%);
+}
