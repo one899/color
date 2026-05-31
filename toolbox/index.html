@@ -503,7 +503,7 @@ body {
         <div class="content-body">
           <div class="banner banner-info">
             <span>ℹ</span>
-            <span>Web 版工具箱通过 WebUSB 连接 Android 设备，需要 Chrome/Edge 浏览器，且使用 USB 数据线连接。</span>
+            <span>支持两种模式：<b>ADB</b>（手机正常开机即可）和 <b>Fastboot</b>（刷机模式）。需要 Chrome/Edge 浏览器 + USB 数据线。首次 ADB 连接需在手机上确认授权。</span>
           </div>
           <div class="card-grid">
             <div class="card">
@@ -683,7 +683,7 @@ body {
         <div class="content-body">
           <div class="banner banner-error">
             <span>⚠</span>
-            <span>解锁 Bootloader 会清除设备所有数据。上锁后刷入非官方系统将无法启动。请谨慎操作。</span>
+            <span>解锁/上锁需要 Fastboot 模式。解锁会清除所有数据，上锁后非官方系统无法启动。请谨慎操作。</span>
           </div>
 
           <div class="card-grid">
@@ -719,7 +719,7 @@ body {
         <div class="content-body" style="display:flex;flex-direction:column;gap:12px;">
           <div class="banner banner-info">
             <span>ℹ</span>
-            <span>输入 fastboot 或 adb 命令。例如：getvar all、reboot、devices</span>
+            <span>ADB 模式：shell getprop ro.product.model、pm list packages 等。Fastboot 模式：getvar all、reboot 等。</span>
           </div>
           <div class="input-group">
             <select class="input" id="cmdType" style="flex:0 0 100px;">
