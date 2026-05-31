@@ -1,0 +1,178 @@
+/* ═══════════════════════════════════════════════
+   Base — Variables, Reset, Typography
+   ═══════════════════════════════════════════════ */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  /* Colors */
+  --black: #000;
+  --bg: #050505;
+  --bg1: #0a0a0c;
+  --bg2: #111114;
+  --bg3: #18181c;
+  --bg4: #222228;
+  --bg5: #2a2a32;
+  --text: #f5f5f7;
+  --text2: #a1a1a6;
+  --text3: #6e6e73;
+  --text4: #48484a;
+
+  /* Accent palette */
+  --violet: #a78bfa;
+  --violet-bright: #c4b5fd;
+  --violet-dim: rgba(167,139,250,0.12);
+  --blue: #60a5fa;
+  --blue-dim: rgba(96,165,250,0.1);
+  --cyan: #22d3ee;
+  --pink: #f472b6;
+  --pink-dim: rgba(244,114,182,0.1);
+  --green: #34d399;
+  --green-dim: rgba(52,211,153,0.1);
+  --amber: #fbbf24;
+  --red: #f87171;
+
+  /* Gradients */
+  --gradient: linear-gradient(135deg, #a78bfa, #818cf8, #60a5fa);
+  --gradient-warm: linear-gradient(135deg, #f472b6, #a78bfa, #60a5fa);
+  --gradient-glow: radial-gradient(ellipse at center, rgba(167,139,250,0.15), transparent 70%);
+
+  /* Spacing */
+  --radius: 24px;
+  --radius-sm: 16px;
+  --radius-xs: 10px;
+  --radius-pill: 980px;
+  --max-w: 1120px;
+  --max-w-narrow: 780px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Typography */
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  font-family: var(--font);
+  color: var(--text);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+button { font-family: inherit; }
+
+/* ─── Custom Cursor ─── */
+.cursor-dot {
+  position: fixed; top: 0; left: 0; z-index: 99999;
+  width: 8px; height: 8px;
+  background: var(--violet);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, background 0.2s;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  position: fixed; top: 0; left: 0; z-index: 99998;
+  width: 36px; height: 36px;
+  border: 1.5px solid rgba(167,139,250,0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s, border-color 0.3s;
+}
+body.cursor-hover .cursor-dot { width: 14px; height: 14px; background: #fff; }
+body.cursor-hover .cursor-ring { width: 52px; height: 52px; border-color: rgba(255,255,255,0.3); }
+
+@media (max-width: 1024px) {
+  body { cursor: auto; }
+  .cursor-dot, .cursor-ring { display: none; }
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--bg5); }
+
+/* ─── Selection ─── */
+::selection { background: rgba(167,139,250,0.3); color: #fff; }
+
+/* ─── Typography Scale ─── */
+.t-display {
+  font-size: clamp(3.5rem, 8vw, 6.5rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+}
+.t-heading {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+.t-subhead {
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  color: var(--text2);
+  font-weight: 400;
+  max-width: 580px;
+  line-height: 1.6;
+}
+.t-eyebrow {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--violet);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.t-body { font-size: 0.95rem; color: var(--text2); line-height: 1.7; }
+.t-small { font-size: 0.8rem; color: var(--text3); }
+.t-mono { font-family: var(--font-mono); font-size: 0.85rem; }
+
+/* ─── Gradient Text ─── */
+.gradient-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.gradient-text-warm {
+  background: var(--gradient-warm);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ─── Noise Overlay ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 99990;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ─── Smooth Scroll Container ─── */
+html.lenis { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
